@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_s3_bucket" "bucket_data" {
   bucket = "mi-bucket-data"
-  acl    = "public-read"
+  acl    = "private"
 }
 
 resource "aws_security_group" "sg_inseguro" {
