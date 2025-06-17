@@ -7,6 +7,12 @@ resource "aws_s3_bucket" "bucket_data" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket_public_access_block" "access_bucket" {
+   bucket = aws_s3_bucket.bucket_data.id
+   block_public_acls   = true
+   block_public_policy = true
+ }
+
 resource "aws_security_group" "sg_inseguro" {
   name        = "sg_inseguro"
   description = "Grupo de seguridad"
