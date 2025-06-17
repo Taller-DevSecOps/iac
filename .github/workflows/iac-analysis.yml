@@ -16,8 +16,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Checkov
-        run: pip install checkov
-
-      - name: Run Checkov scan
-        run: checkov -d .
+      - name: Run Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          quiet: true
+          framework: terraform
+        
