@@ -1,31 +1,43 @@
-provider "aws" {
-  region = "us-east-1"
+terraform {
+  required_version = ">= 1.5.0"
+
+  required_providers {
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.5"
+    }
+  }
 }
 
-resource "aws_s3_bucket" "bucket_data" {
-  bucket = "mi-bucket-data"
-  acl    = "public-read"
+variable "environment" {
+  type    = string
+  default = "demo"
 }
 
-resource "aws_s3_bucket_public_access_block" "access_good_1" {
-   bucket = aws_s3_bucket.bucket_data.id
-   block_public_acls   = true
-   block_public_policy = true
- }
+resource "random_pet" "name" {
+  length = 2
+}
 
-resource "aws_security_group" "sg_inseguro" {
-  name        = "sg_inseguro"
-  description = "Grupo de seguridad"
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.1/32"]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "local_file" "summary" {
+  filename = "${path.module}/demo-output.txt"
+  content  = <<EOT
+environment = ${var.environment}
+generated_name = ${random_pet.name.id}
+EOT
+}
+
+output "environment" {
+  value = var.environment
+}
+
+output "generated_name" {
+  value = random_pet.name.id
+}
+
+output "file_path" {
+  value = local_file.summary.filename
 }
