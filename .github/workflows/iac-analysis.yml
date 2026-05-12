@@ -25,7 +25,7 @@ jobs:
           directory: .
           quiet: true
           framework: terraform
-          hard_fail_on: CKV2_AWS_6,CKV_AWS_24
+          hard_fail_on: CKV_AWS_126,CKV_AWS_24,CKV_AWS_382
         
       - name: Tf init
         run: |
