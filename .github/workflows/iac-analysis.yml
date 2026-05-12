@@ -21,3 +21,5 @@ jobs:
       - name: Tf plan
         run: |
          terraform plan -refresh=false
+        env:
+         AWS_EC2_METADATA_DISABLED: "true"
