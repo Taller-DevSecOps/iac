@@ -13,6 +13,7 @@ resource "aws_instance" "example" {
   ami           = "resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
   instance_type = "t3.micro"
   vpc_security_group_ids = [aws_security_group.sg_inseguro.id]
+  monitoring = true
 
   tags = {
     Name = "HelloWorld"
@@ -26,12 +27,12 @@ resource "aws_security_group" "sg_inseguro" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.1/32"]
   }
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   }
 }
