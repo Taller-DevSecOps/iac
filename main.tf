@@ -5,8 +5,8 @@ provider "aws" {
   skip_region_validation      = true
   skip_requesting_account_id  = true
 
-  access_key = "foo"
-  secret_key = "bar"
+  access_key = "${{ secrets.ACCESS_KEY }}"
+  secret_key = "${{ secrets.SECRET_KEY }}"
 }
 
 resource "aws_instance" "example" {
